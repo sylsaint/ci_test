@@ -42,8 +42,8 @@ pipeline {
         failure {
             echo 'This will run only if failed'
 			mail to: 'sunyonglu@lvwan.com',
-             subject: "Pipline失败: ${currentBuild.fullDisplayName}",
-             body: "构建异常 ${env.BUILD_URL}"
+             	 subject: "Failed Pipline: ${currentBuild.fullDisplayName}",
+             	 body: "abnormal ${env.BUILD_URL}"
         }
         unstable {
             echo 'This will run only if the run was marked as unstable'
