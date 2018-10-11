@@ -15,7 +15,12 @@ pipeline {
                 '''
             }
         }
-		stage('Deploy') {
+		stage('Test') {
+            steps {
+                sh 'echo "Succ!"; exit 0'
+            }
+        }
+		stage('Deploy - Staging') {
             steps {
                 retry(3) {
                     sh './flakey-deploy.sh'
@@ -26,11 +31,16 @@ pipeline {
                 }
             }
         }
-		stage('Test') {
-            steps {
-                sh 'echo "Succ!"; exit 1'
+		stage('Sanity check') {
+			steps {
+				input "进行线上部署"
             }
-        }
+		}
+		stage('Deploy - Production') {
+        	steps {
+				sh 'echo 'deployed'
+			}
+		}
     }
     post {
         always {
