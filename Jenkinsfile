@@ -28,7 +28,7 @@ pipeline {
         }
 		stage('Test') {
             steps {
-                sh 'echo "Succ!"; exit 0'
+                sh 'echo "Succ!"; exit 1'
             }
         }
     }
@@ -41,6 +41,9 @@ pipeline {
         }
         failure {
             echo 'This will run only if failed'
+			mail to: 'sunyonglu@lvwan.com',
+             subject: "Pipline失败: ${currentBuild.fullDisplayName}",
+             body: "构建异常 ${env.BUILD_URL}"
         }
         unstable {
             echo 'This will run only if the run was marked as unstable'
